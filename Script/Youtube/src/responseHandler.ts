@@ -7,7 +7,8 @@ import {
   Search,
   Shorts,
   Guide,
-  Setting
+  Setting,
+  DownloadAction
 } from '../lib/response'
 import { YouTubeMessage } from './youtube'
 import { $ } from '../lib/env'
@@ -16,11 +17,11 @@ import { translateURL } from '../lib/googleTranslate'
 export class BrowseMessage extends YouTubeMessage {
   needTranslate: boolean
 
-  constructor (msgType: any = Browse, name: string = 'Browse') {
+  constructor(msgType: any = Browse, name: string = 'Browse') {
     super(msgType, name)
   }
 
-  pure (): this {
+  pure(): this {
     this.iterate(this.message, 'n5F1', (obj) => {
       for (let i = obj.n5F1?.length - 1; i >= 0; i--) {
         if (this.isAdvertise(obj.n5F1[i])) {
@@ -35,7 +36,7 @@ export class BrowseMessage extends YouTubeMessage {
     return this
   }
 
-  getBrowseId (): string {
+  getBrowseId(): string {
     let browseId = ''
     this.iterate(this.message?.responseContext, 'key', (obj, stack) => {
       if (obj.key === 'browse_id') {
@@ -46,7 +47,7 @@ export class BrowseMessage extends YouTubeMessage {
     return browseId
   }
 
-  async translate (): Promise<void> {
+  async translate(): Promise<void> {
     let lyric = ''
     let tempObj: any
     let flag = false
@@ -97,17 +98,17 @@ export class BrowseMessage extends YouTubeMessage {
 }
 
 export class NextMessage extends BrowseMessage {
-  constructor (msgType: any = Next, name: string = 'Next') {
+  constructor(msgType: any = Next, name: string = 'Next') {
     super(msgType, name)
   }
 
-  pure (): this {
+  pure(): this {
     super.pure()
     // this.addTranslateTab()
     return this
   }
 
-  addTranslateTab (): void {
+  addTranslateTab(): void {
     this.iterate(this.message?.a1F7?.musicPlayRender, 'items', (obj, stack) => {
       const item = obj.items.find((item) =>
         item.tab.info?.browseInfo?.browseId.startsWith('MPLYt')
@@ -136,14 +137,24 @@ export class NextMessage extends BrowseMessage {
 }
 
 export class PlayerMessage extends YouTubeMessage {
-  constructor (msgType: any = Player, name: string = 'Player') {
+  constructor(msgType: any = Player, name: string = 'Player') {
     super(msgType, name)
   }
 
-  pure (): this {
+  pure(): this {
     if (this.message.p1F7?.length) {
       this.message.p1F7.length = 0
     }
+
+    // for download
+    this.message!.p1F2.p2F1 = 0
+    this.message.p1F14 = {
+      f1: "",
+      f2: 36523, // magic
+      f3: 2592000, // 30 days
+      f5: 1
+    }
+
     // 尝试开启PIP
     const option = this.message?.p1F2?.p2F21?.p3F151635310
     if (typeof option === 'object') {
@@ -226,17 +237,17 @@ export class PlayerMessage extends YouTubeMessage {
 }
 
 export class SearchMessage extends BrowseMessage {
-  constructor (msgType: any = Search, name: string = 'Search') {
+  constructor(msgType: any = Search, name: string = 'Search') {
     super(msgType, name)
   }
 }
 
 export class ShortsMessage extends YouTubeMessage {
-  constructor (msgType: any = Shorts, name: string = 'Shorts') {
+  constructor(msgType: any = Shorts, name: string = 'Shorts') {
     super(msgType, name)
   }
 
-  pure (): this {
+  pure(): this {
     const shortsRawLength = this.message.t1F2?.length
     if (shortsRawLength) {
       for (let i = shortsRawLength - 1; i >= 0; i--) {
@@ -251,11 +262,11 @@ export class ShortsMessage extends YouTubeMessage {
 }
 
 export class GuideMessage extends YouTubeMessage {
-  constructor (msgType: any = Guide, name: string = 'Guide') {
+  constructor(msgType: any = Guide, name: string = 'Guide') {
     super(msgType, name)
   }
 
-  pure (): this {
+  pure(): this {
     const blackList = ['FEmusic_immersive', 'SPunlimited', 'FEuploads']
     this.iterate(this.message, 'g3F1', (obj) => {
       for (let i = obj.g3F1.length - 1; i >= 0; i--) {
@@ -273,11 +284,11 @@ export class GuideMessage extends YouTubeMessage {
 }
 
 export class SettingMessage extends YouTubeMessage {
-  constructor (msgType: any = Setting, name: string = 'Setting') {
+  constructor(msgType: any = Setting, name: string = 'Setting') {
     super(msgType, name)
   }
 
-  pure (): this {
+  pure(): this {
     // 增加 PIP
     this.iterate(this.message, 'num', (obj) => {
       if (obj.num === 10005) {
@@ -341,5 +352,42 @@ export class SettingMessage extends YouTubeMessage {
     this.message.st1F7 = fakeF88478200
     this.needProcess = true
     return this
+  }
+}
+
+export class DownloadActionMessage extends YouTubeMessage {
+  constructor(msgType: any = DownloadAction, name: string = 'DownloadAction') {
+    super(msgType, name)
+  }
+
+  pure(): this {
+    delete this.message.da1F2?.n2F204158123
+    const fake174116574 = {
+      da4F1: {
+        da5F2: this.message.da1F4,
+        da5F73080600: {
+          videoId: "",
+          da6F2: 1,
+          da6F4: {
+            n60572968: {
+              da7F1: 1,
+              da7F4: this.message.da1F4
+            }
+          },
+          da6F6: {
+            f1: 1,
+            f2: 1
+          }
+        }
+      }
+    };
+    this.message.da1F2!.n3F174116574 = fake174116574
+    this.needProcess = true
+    return this
+  }
+
+  setVideoId(vid: string): void {
+    this.message.da1F2.n3F174116574.da4F1.da5F73080600.videoId = vid
+    this.needProcess = true
   }
 }

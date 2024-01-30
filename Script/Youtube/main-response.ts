@@ -1,15 +1,29 @@
 import createMessage from './lib/factory'
-import { BrowseMessage } from './src/responseHandler'
+import { RequestDownloadActionMessage } from './src/requestHandler'
+import { BrowseMessage, DownloadActionMessage} from './src/responseHandler'
 import { $ } from './lib/env'
 
-async function start (): Promise<void> {
+async function start(): Promise<void> {
   const responseMsg = createMessage($.request.url)
   if (responseMsg) {
     try {
       const body = $.response.bodyBytes as Uint8Array
-      responseMsg.fromBinary(body).pure()
-      if (responseMsg instanceof BrowseMessage && responseMsg.needTranslate) {
-        await responseMsg.translate()
+      if (responseMsg instanceof DownloadActionMessage) {
+        let vid = ""
+        try {
+          const requestMsg = new RequestDownloadActionMessage()
+          requestMsg.fromBinary($.request.bodyBytes as Uint8Array)
+          vid = requestMsg.getVideoId()
+        } catch (e) {
+          console.log(e.toString())
+        }
+        responseMsg.fromBinary(body).pure()
+        responseMsg.setVideoId(vid)
+      } else {
+        responseMsg.fromBinary(body).pure()
+        if (responseMsg instanceof BrowseMessage && responseMsg.needTranslate) {
+          await responseMsg.translate()
+        }
       }
       responseMsg.doneResponse()
     } catch (e) {

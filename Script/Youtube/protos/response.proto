@@ -247,7 +247,9 @@ message Name {
 message Player {
   repeated p1F7 p1F7 = 7;
   p1F2 p1F2 = 2;
+  p1F4 p1F4 = 4;
   Captions captions = 10 [json_name = "captions"];
+  p1F14 p1F14 = 14;
   message Captions {
     PlayerCaptionsTracklistRenderer playerCaptionsTracklistRenderer = 51621377 [json_name = "playerCaptionsTracklistRenderer"];
 
@@ -289,17 +291,48 @@ message Player {
 }
 
 message p1F2{
+  int32 p2F1 = 1; // premium: 0
+  string p2F2 = 2;
+  p2F10 p2F10 = 10;
   p2F21 p2F21 = 21;
   p2F11 p2F11 = 11;
 }
+message p1F4{
+  repeated p4F3 p4F3 = 3;
+}
+message p4F3{
+  string stream = 2;
+  string codecs = 5;
+  uint32 w = 7;
+  uint32 h = 8;
+}
 message p1F7 {
   p2F84813246 p2F84813246 = 84813246;
+}
+message p1F14{
+  string f1 = 1;
+  uint32 f2 = 2;
+  uint32 f3 = 3;
+  uint32 f5 = 5;
 }
 message p2F84813246 {
   int32 v = 3;
 }
 message p2F21 {
   p3F151635310 p3F151635310 = 151635310;
+}
+message p2F10{
+  n60572968 pn60572968 = 60572968;
+}
+message pn60572968{
+  int32 f1 = 1;
+  repeated videoInfo videoInfo = 3;
+  // da2F2 f4 = 4;
+}
+message videoInfo{
+  int32 f3 = 3;
+  int32 f4 = 4;
+  int32 f5 = 5;
 }
 message  p2F11{
   p3F64657230 p3F64657230 = 64657230;
@@ -384,4 +417,56 @@ message st7F1{
 }
 message st8F1{
   int32 f1 = 1;
+}
+
+message DownloadAction{
+  da1F2 da1F2 = 2;
+  da2F2 da1F4 = 4;
+}
+message da1F2{
+  da2F2 da2F2 = 2;
+  optional n2F204158123 n2F204158123 = 204158123;
+  optional n3F174116574 n3F174116574 = 174116574;
+}
+message n2F204158123{
+  n3F278463287 n3F278463287 = 278463287;
+}
+message n3F278463287{
+
+}
+message da2F2{
+  int32 f1 = 1;
+  int32 f2 = 2;
+  da3F4 da3F4 = 4;
+  string da3F6 = 6;
+}
+message da3F4{
+  uint64 f1 = 1;
+  // uint32 f1 = 1;
+  float f2 = 2;
+  float f3 = 3;
+}
+message n3F174116574{
+  da4F1 da4F1 = 1;
+}
+message da4F1{
+  da2F2 da5F2 = 2;
+  da5F73080600 da5F73080600 = 73080600;
+}
+message da5F73080600{
+  string videoId = 1;
+  int32 da6F2 = 2;
+  da6F4 da6F4 = 4;
+  da6F6 da6F6 = 6;
+}
+message da6F4{
+  n60572968 n60572968 = 60572968;
+}
+message da6F6 {
+  int32 f1 = 1;
+  int32 f2 = 2;
+}
+message n60572968{
+  int32 da7F1 = 1;
+  da2F2 da7F4 = 4;
 }

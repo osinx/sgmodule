@@ -55,6 +55,78 @@ export interface Params {
      */
     value: string;
 }
+/**
+ * @generated from protobuf message RequestDownloadAction
+ */
+export interface RequestDownloadAction {
+    /**
+     * @generated from protobuf field: string videoId = 8;
+     */
+    videoId: string;
+}
+/**
+ * @generated from protobuf message RequestPlayer
+ */
+export interface RequestPlayer {
+    /**
+     * @generated from protobuf field: Context context = 1;
+     */
+    context?: Context;
+    /**
+     * @generated from protobuf field: string videoId = 2;
+     */
+    videoId: string;
+    /**
+     * @generated from protobuf field: p1F4 p1F4 = 4;
+     */
+    p1F4?: p1F4;
+    /**
+     * @generated from protobuf field: uint32 p1F8 = 8;
+     */
+    p1F8: number;
+}
+/**
+ * @generated from protobuf message p1F4
+ */
+export interface p1F4 {
+    /**
+     * @generated from protobuf field: p4F1 p4F1 = 1;
+     */
+    p4F1?: p4F1;
+}
+/**
+ * @generated from protobuf message p4F1
+ */
+export interface p4F1 {
+    /**
+     * @generated from protobuf field: uint32 f5 = 5;
+     */
+    f5: number;
+    /**
+     * @generated from protobuf field: uint32 f7 = 7;
+     */
+    f7: number;
+    /**
+     * @generated from protobuf field: uint32 f8 = 8;
+     */
+    f8: number;
+    /**
+     * @generated from protobuf field: uint32 f11 = 11;
+     */
+    f11: number;
+    /**
+     * @generated from protobuf field: string f12 = 12;
+     */
+    f12: string;
+    /**
+     * @generated from protobuf field: uint32 f29 = 29;
+     */
+    f29: number;
+    /**
+     * @generated from protobuf field: uint32 f44 = 44;
+     */
+    f44: number;
+}
 // @generated message type with reflection information, may provide speed optimized methods
 class Request$Type extends MessageType<Request> {
     constructor() {
@@ -257,3 +329,254 @@ class Params$Type extends MessageType<Params> {
  * @generated MessageType for protobuf message Params
  */
 export const Params = new Params$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class RequestDownloadAction$Type extends MessageType<RequestDownloadAction> {
+    constructor() {
+        super("RequestDownloadAction", [
+            { no: 8, name: "videoId", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<RequestDownloadAction>): RequestDownloadAction {
+        const message = { videoId: "" };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<RequestDownloadAction>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: RequestDownloadAction): RequestDownloadAction {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string videoId */ 8:
+                    message.videoId = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: RequestDownloadAction, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string videoId = 8; */
+        if (message.videoId !== "")
+            writer.tag(8, WireType.LengthDelimited).string(message.videoId);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message RequestDownloadAction
+ */
+export const RequestDownloadAction = new RequestDownloadAction$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class RequestPlayer$Type extends MessageType<RequestPlayer> {
+    constructor() {
+        super("RequestPlayer", [
+            { no: 1, name: "context", kind: "message", T: () => Context },
+            { no: 2, name: "videoId", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "p1F4", kind: "message", T: () => p1F4 },
+            { no: 8, name: "p1F8", kind: "scalar", T: 13 /*ScalarType.UINT32*/ }
+        ]);
+    }
+    create(value?: PartialMessage<RequestPlayer>): RequestPlayer {
+        const message = { videoId: "", p1F8: 0 };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<RequestPlayer>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: RequestPlayer): RequestPlayer {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* Context context */ 1:
+                    message.context = Context.internalBinaryRead(reader, reader.uint32(), options, message.context);
+                    break;
+                case /* string videoId */ 2:
+                    message.videoId = reader.string();
+                    break;
+                case /* p1F4 p1F4 */ 4:
+                    message.p1F4 = p1F4.internalBinaryRead(reader, reader.uint32(), options, message.p1F4);
+                    break;
+                case /* uint32 p1F8 */ 8:
+                    message.p1F8 = reader.uint32();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: RequestPlayer, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* Context context = 1; */
+        if (message.context)
+            Context.internalBinaryWrite(message.context, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        /* string videoId = 2; */
+        if (message.videoId !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.videoId);
+        /* p1F4 p1F4 = 4; */
+        if (message.p1F4)
+            p1F4.internalBinaryWrite(message.p1F4, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
+        /* uint32 p1F8 = 8; */
+        if (message.p1F8 !== 0)
+            writer.tag(8, WireType.Varint).uint32(message.p1F8);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message RequestPlayer
+ */
+export const RequestPlayer = new RequestPlayer$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class p1F4$Type extends MessageType<p1F4> {
+    constructor() {
+        super("p1F4", [
+            { no: 1, name: "p4F1", kind: "message", T: () => p4F1 }
+        ]);
+    }
+    create(value?: PartialMessage<p1F4>): p1F4 {
+        const message = {};
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<p1F4>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: p1F4): p1F4 {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* p4F1 p4F1 */ 1:
+                    message.p4F1 = p4F1.internalBinaryRead(reader, reader.uint32(), options, message.p4F1);
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: p1F4, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* p4F1 p4F1 = 1; */
+        if (message.p4F1)
+            p4F1.internalBinaryWrite(message.p4F1, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message p1F4
+ */
+export const p1F4 = new p1F4$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class p4F1$Type extends MessageType<p4F1> {
+    constructor() {
+        super("p4F1", [
+            { no: 5, name: "f5", kind: "scalar", T: 13 /*ScalarType.UINT32*/ },
+            { no: 7, name: "f7", kind: "scalar", T: 13 /*ScalarType.UINT32*/ },
+            { no: 8, name: "f8", kind: "scalar", T: 13 /*ScalarType.UINT32*/ },
+            { no: 11, name: "f11", kind: "scalar", T: 13 /*ScalarType.UINT32*/ },
+            { no: 12, name: "f12", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 29, name: "f29", kind: "scalar", T: 13 /*ScalarType.UINT32*/ },
+            { no: 44, name: "f44", kind: "scalar", T: 13 /*ScalarType.UINT32*/ }
+        ]);
+    }
+    create(value?: PartialMessage<p4F1>): p4F1 {
+        const message = { f5: 0, f7: 0, f8: 0, f11: 0, f12: "", f29: 0, f44: 0 };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<p4F1>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: p4F1): p4F1 {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* uint32 f5 */ 5:
+                    message.f5 = reader.uint32();
+                    break;
+                case /* uint32 f7 */ 7:
+                    message.f7 = reader.uint32();
+                    break;
+                case /* uint32 f8 */ 8:
+                    message.f8 = reader.uint32();
+                    break;
+                case /* uint32 f11 */ 11:
+                    message.f11 = reader.uint32();
+                    break;
+                case /* string f12 */ 12:
+                    message.f12 = reader.string();
+                    break;
+                case /* uint32 f29 */ 29:
+                    message.f29 = reader.uint32();
+                    break;
+                case /* uint32 f44 */ 44:
+                    message.f44 = reader.uint32();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: p4F1, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* uint32 f5 = 5; */
+        if (message.f5 !== 0)
+            writer.tag(5, WireType.Varint).uint32(message.f5);
+        /* uint32 f7 = 7; */
+        if (message.f7 !== 0)
+            writer.tag(7, WireType.Varint).uint32(message.f7);
+        /* uint32 f8 = 8; */
+        if (message.f8 !== 0)
+            writer.tag(8, WireType.Varint).uint32(message.f8);
+        /* uint32 f11 = 11; */
+        if (message.f11 !== 0)
+            writer.tag(11, WireType.Varint).uint32(message.f11);
+        /* string f12 = 12; */
+        if (message.f12 !== "")
+            writer.tag(12, WireType.LengthDelimited).string(message.f12);
+        /* uint32 f29 = 29; */
+        if (message.f29 !== 0)
+            writer.tag(29, WireType.Varint).uint32(message.f29);
+        /* uint32 f44 = 44; */
+        if (message.f44 !== 0)
+            writer.tag(44, WireType.Varint).uint32(message.f44);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message p4F1
+ */
+export const p4F1 = new p4F1$Type();

@@ -1,7 +1,7 @@
-import RequestMessage from './src/requestHandler'
+import { createRequestMessage } from './lib/factory'
 import { $ } from './lib/env'
 
-const requestMsg = new RequestMessage()
+const requestMsg = createRequestMessage($.request.url)
 
 try {
   const bodyBytes = requestMsg.fromBinary($.request.bodyBytes as Uint8Array).pure().toBinary()
