@@ -1,9 +1,11 @@
-import createMessage from '../lib/factory'
-import RequestMessage from './requestHandler'
+import createMessage, { createRequestMessage } from '../lib/factory'
+import { RequestDownloadActionMessage } from './requestHandler'
+import { DownloadActionMessage } from './responseHandler'
 import { $ } from '../lib/env'
 
 const handleRequestBodyBytes = (bodyBytes: Uint8Array): Uint8Array => {
-  const requestMsg = new RequestMessage()
+  const requestMsg = createRequestMessage($.request.url)
+
   try {
     return requestMsg.fromBinary(bodyBytes).pure().toBinary()
   } catch (e) {
@@ -18,7 +20,21 @@ const handleResponse = (response: CFetchResponse): void => {
   if (responseMsg) {
     try {
       const body = response.bodyBytes as Uint8Array
-      responseMsg.fromBinary(body).pure().done(response)
+      if (responseMsg instanceof DownloadActionMessage) {
+        let vid = ""
+        try {
+          const requestMsg = new RequestDownloadActionMessage()
+          requestMsg.fromBinary($.request.bodyBytes as Uint8Array)
+          vid = requestMsg.getVideoId()
+        } catch (e) {
+          console.log(e.toString())
+        }
+        responseMsg.fromBinary(body).pure()
+        responseMsg.setVideoId(vid)
+        responseMsg.doneResponse()
+      } else {
+        responseMsg.fromBinary(body).pure().done(response)
+      }
     } catch (e) {
       console.log(e.toString())
     }
