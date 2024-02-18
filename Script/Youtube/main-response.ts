@@ -1,7 +1,5 @@
 import createMessage from './lib/factory'
 import { $ } from './lib/env'
-import { RequestDownloadActionMessage } from './src/requestHandler'
-import { DownloadActionMessage } from './src/responseHandler'
 
 async function start(): Promise<void> {
   try {

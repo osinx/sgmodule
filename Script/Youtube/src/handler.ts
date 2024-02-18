@@ -1,13 +1,12 @@
 import createMessage, { createRequestMessage } from '../lib/factory'
-import { RequestDownloadActionMessage } from './requestHandler'
-import { DownloadActionMessage } from './responseHandler'
 import { $ } from '../lib/env'
 
 const handleRequestBodyBytes = (bodyBytes: Uint8Array): Uint8Array => {
   const requestMsg = createRequestMessage($.request.url)
 
-  try {
-    return requestMsg.fromBinary(bodyBytes).pure().toBinary()
+  try { 
+    requestMsg.fromBinary(bodyBytes).modify()
+    return requestMsg.toBinary()
   } catch (e) {
     $.log(e.toString())
     return bodyBytes
