@@ -20,21 +20,8 @@ const handleResponse = (response: CFetchResponse): void => {
   if (responseMsg) {
     try {
       const body = response.bodyBytes as Uint8Array
-      if (responseMsg instanceof DownloadActionMessage) {
-        let vid = ""
-        try {
-          const requestMsg = new RequestDownloadActionMessage()
-          requestMsg.fromBinary($.request.bodyBytes as Uint8Array)
-          vid = requestMsg.getVideoId()
-        } catch (e) {
-          console.log(e.toString())
-        }
-        responseMsg.fromBinary(body).pure()
-        responseMsg.setVideoId(vid)
-        responseMsg.doneResponse()
-      } else {
-        responseMsg.fromBinary(body).pure().done(response)
-      }
+      responseMsg.fromBinary(body).modify()
+      responseMsg.doneResponse()
     } catch (e) {
       console.log(e.toString())
     }

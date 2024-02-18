@@ -1,0 +1,6 @@
+syntax = "proto3";
+package youtube.request.download;
+
+message RequestDownloadAction{
+  string videoId = 8;
+}

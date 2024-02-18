@@ -1,0 +1,54 @@
+syntax = "proto3";
+package youtube.response.download;
+
+message DownloadAction{
+  Da1F2 da1F2 = 2;
+  Da2F2 da1F4 = 4;
+}
+message Da1F2{
+  Da2F2 da2F2 = 2;
+  optional N2F204158123 n2F204158123 = 204158123;
+  optional N3F174116574 n3F174116574 = 174116574;
+}
+message N2F204158123{
+  n3F278463287 n3F278463287 = 278463287;
+}
+message n3F278463287{
+
+}
+message Da2F2{
+  int32 f1 = 1;
+  int32 f2 = 2;
+  da3F4 da3F4 = 4;
+  string da3F6 = 6;
+}
+message da3F4{
+  uint64 f1 = 1;
+  // uint32 f1 = 1;
+  float f2 = 2;
+  float f3 = 3;
+}
+message N3F174116574{
+  da4F1 da4F1 = 1;
+}
+message da4F1{
+  Da2F2 da5F2 = 2;
+  da5F73080600 da5F73080600 = 73080600;
+}
+message da5F73080600{
+  string videoId = 1;
+  int32 da6F2 = 2;
+  da6F4 da6F4 = 4;
+  da6F6 da6F6 = 6;
+}
+message da6F4{
+  n60572968 n60572968 = 60572968;
+}
+message da6F6 {
+  int32 f1 = 1;
+  int32 f2 = 2;
+}
+message n60572968{
+  int32 da7F1 = 1;
+  Da2F2 da7F4 = 4;
+}

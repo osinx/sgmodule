@@ -1,37 +1,24 @@
 import createMessage from './lib/factory'
-import { RequestDownloadActionMessage } from './src/requestHandler'
-import { BrowseMessage, DownloadActionMessage} from './src/responseHandler'
 import { $ } from './lib/env'
+import { RequestDownloadActionMessage } from './src/requestHandler'
+import { DownloadActionMessage } from './src/responseHandler'
 
 async function start(): Promise<void> {
-  const responseMsg = createMessage($.request.url)
-  if (responseMsg) {
-    try {
-      const body = $.response.bodyBytes as Uint8Array
-      if (responseMsg instanceof DownloadActionMessage) {
-        let vid = ""
-        try {
-          const requestMsg = new RequestDownloadActionMessage()
-          requestMsg.fromBinary($.request.bodyBytes as Uint8Array)
-          vid = requestMsg.getVideoId()
-        } catch (e) {
-          console.log(e.toString())
-        }
-        responseMsg.fromBinary(body).pure()
-        responseMsg.setVideoId(vid)
-      } else {
-        responseMsg.fromBinary(body).pure()
-        if (responseMsg instanceof BrowseMessage && responseMsg.needTranslate) {
-          await responseMsg.translate()
-        }
-      }
-      responseMsg.doneResponse()
-    } catch (e) {
-      console.log(e.toString())
+  try {
+    const responseMsg = createMessage($.request.url)
+
+    if (!responseMsg) {
+      $.msg('YouTube Enhance', '脚本需要更新', '外部资源 -> 全部更新')
+
       $.exit()
+      return
     }
-  } else {
-    $.msg('YouTube Enhance', '脚本需要更新', '外部资源 -> 全部更新')
+
+    const body = $.response.bodyBytes as Uint8Array
+    await responseMsg.fromBinary(body).modify()
+    responseMsg.doneResponse()
+  } catch (e) {
+    console.log(e.toString())
     $.exit()
   }
 }

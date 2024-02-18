@@ -76,3 +76,5 @@ declare const $notification: Notification
 declare const $notify: (title: string, subtitle: string, message: string, option?: NotifyOption) => void
 declare const $prefs: Prefs
 declare const $task: Task
+declare const $utils: Utils
+declare const $argument: string | undefined
